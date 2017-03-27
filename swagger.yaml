@@ -31,7 +31,62 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Factory"
-              
+  
+  /factories/{factoryId}/machines:
+    get:  
+      tags: [capital equipment]
+      summary: List machines at a given factory
+      description: The factory is an important top-level object for tracking both manufacturing activities as well as supply chain & order fulfillment, underpinning Vandelay's import/export business.
+      operationId: getMachines
+      parameters:
+        - name: factoryId
+          in: path
+          description: The ID of the factory housing the machine
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Machine"            
+
+
+  /warehouses:
+    get:
+      tags: [real estate]
+      summary: List warehouses in the ERP system
+      description: The warehouse is an important top-level object for tracking both inbound material and outbound product.
+      operationId: getWarehouses
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Warehouse"
+  
+  /warehouses/{warehouseId}:
+    get:
+      tags: [real estate]
+      summary: Return details on a single warehouse, notably an array containing inventory
+      description: The warehouse is an important top-level object for tracking both inbound material and outbound product.
+      operationId: getWarehouse
+      parameters:
+        - name: warehouseId
+          in: path
+          description: The ID of the warehouse to return
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Inventory"
+
               
 definitions:
   Factory:
@@ -45,9 +100,62 @@ definitions:
         example: Newark Latex Mfg.
       factoryDescription:
         type: string
-        example: Key East Coast shipping/receiving location for raw latex material to be processed into final products for the medical industry.
+        example: Key East Coast facility for raw latex material to be processed into final products for the medical industry.
       factoryAddress:
         $ref: "#/definitions/Address"
+        
+  Machine:
+    type: object
+    properties:
+      factoryId:
+        type: integer
+        format: int64
+      machineId:
+        type: integer
+        format: int64
+      machineName:
+        type: string
+        example: Extruder AB-100
+      machineDescription:
+        type: string
+        example: Extruder with 1,000fpm output capacity
+
+  Warehouse:
+    type: object
+    properties:
+      warehouseId:
+        type: integer
+        format: int64
+      warehouseName:
+        type: string
+        example: Pier 10 Holdings
+      warehouseDescription:
+        type: string
+        example: Key East Coast shipping/receiving location for storing finished product, ready for distribution.
+      warehouseAddress:
+        $ref: "#/definitions/Address"
+
+  Inventory:
+    type: object
+    properties:
+      warehouseId:
+        type: integer
+        format: int64
+      itemId:
+        type: integer
+        format: int64
+      itemSKU:
+        type: integer
+        format: int64
+      itemQuantity:
+        type: integer
+        format: int64
+      itemName:
+        type: string
+        example: Waterproof seal
+      itemDescription:
+        type: string
+        example: For sealing specimens to preserve them
         
   Address:
     type: object
