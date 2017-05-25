@@ -21,8 +21,20 @@
         "tags": [
           "StackOverflow"
         ],
-        "summary": "Return plain text w/ line breaks",
+        "summary": "Return plain text w/ line breaks...",
         "operationId": "showText",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "How many items to return at one time (max 100)",
+            "minimum": 0,
+            "maximum": 63333,
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
