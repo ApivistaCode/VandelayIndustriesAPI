@@ -12,9 +12,30 @@
   ],
   "basePath": "/v1",
   "produces": [
-    "application/json"
+    "application/json",
+    "text/plain"
   ],
   "paths": {
+    "/text": {
+      "get": {
+        "tags": [
+          "StackOverflow"
+        ],
+        "summary": "Return plain text w/ line breaks",
+        "operationId": "showText",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Text"
+              }
+            }
+          }
+        }
+      }
+    },
     "/factories": {
       "get": {
         "tags": [
@@ -290,6 +311,15 @@
         },
         "country": {
           "type": "string"
+        }
+      }
+    },
+    "Text": {
+      "type": "object",
+      "properties": {
+        "multiLineString": {
+          "type": "string",
+          "example": "return \n\nvalue      \n"
         }
       }
     }
